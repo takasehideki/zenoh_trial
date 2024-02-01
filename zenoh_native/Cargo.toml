@@ -6,3 +6,14 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
+zenoh = "0.10.1-rc"
+async-std = "1"
+futures = "0.3"
+
+[[bin]]
+name = "pub_rust"
+path = "src/bin/pub.rs"
+
+[[bin]]
+name = "sub_rust"
+path = "src/bin/sub.rs"
