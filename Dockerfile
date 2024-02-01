@@ -17,4 +17,12 @@ RUN apt-get update && apt-get install -y \
 RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
 ENV PATH $PATH:$HOME/.cargo/env
 
+# Install Python & zenoh-python
+RUN apt-get update && apt-get install -y \
+  python3.11 python3-pip \
+  && apt-get clean \
+  && rm -rf /var/lib/apt/lists/*
+RUN pip install -U pip && \
+  pip install --no-cache-dir eclipse-zenoh
+
 CMD ["/bin/bash"]
