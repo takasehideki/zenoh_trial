@@ -27,3 +27,18 @@ cargo build
 ```
 ./target/debug/sub_rust
 ```
+
+## zenoh_python
+
+Zenoh nodes implemented in Python.  
+Source code is referred to https://zenoh.io/docs/getting-started/first-app/
+
+- Run
+```
+cd zenoh_python
+python3 pub.py
+```
+```
+cd zenoh_python
+python3 sub.py
+```
