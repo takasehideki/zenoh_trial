@@ -9,6 +9,7 @@ edition = "2021"
 zenoh = "0.10.1-rc"
 async-std = "1"
 futures = "0.3"
+ctrlc-handler = "0.1.2"
 
 [[bin]]
 name = "pub_rust"
