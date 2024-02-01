@@ -5,13 +5,15 @@ use std::{thread, time};
 
 #[async_std::main]
 async fn main() {
-    let handler = CtrlCHandler::new();
+    let session = zenoh::open(config::peer()).res().await.unwrap().into_arc();
+    let publisher = session.declare_publisher("key/expression").res().await.unwrap();
 
-    let session = zenoh::open(config::default()).res().await.unwrap();
+    let handler = CtrlCHandler::new();
     while handler.should_continue() {
-        session.put("key/expression", "value").res().await.unwrap();
+        publisher.put("value").res().await.unwrap();
 
         thread::sleep(time::Duration::from_millis(1000));
     }
-    session.close().res().await.unwrap();
+
+    publisher.delete().res().await.unwrap();
 }
