@@ -8,7 +8,7 @@ defmodule ZenohElixir.Pub do
 
   def publish(publisher, num) do
     msg = "Hello from Elixir!! " <> to_string(num)
-    IO.puts "Publishing: " <> msg
+    IO.puts "[pub.ex] " <> msg
 
     Publisher.put(publisher, msg)
 

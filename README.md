@@ -26,7 +26,9 @@ docker run -it --rm -v `pwd`:/zenoh_trial -w /zenoh_trial zenoh_trial
 - Erlang/OTP 26.1.1
 - Elixir 
 
-## zenoh_native
+## Communication between anywhere in programming languages
+
+### zenoh_native
 
 Zenoh nodes (natively) implemented in Rust.  
 The Source code is referred to https://docs.rs/zenoh/0.10.1-rc/zenoh/#examples
@@ -37,15 +39,17 @@ cd zenoh_native
 cargo build
 ```
 
+If the first build fails in Docker env, just try it again ;(
+
 - Run
 ```
-./target/debug/pub_rust
+./target/debug/pub
 ```
 ```
-./target/debug/sub_rust
+./target/debug/sub
 ```
 
-## zenoh_python
+### zenoh_python
 
 Zenoh nodes implemented in Python.  
 The Source code is referred to https://zenoh.io/docs/getting-started/first-app/
@@ -60,7 +64,7 @@ cd zenoh_python
 python3 sub.py
 ```
 
-## zenoh_elixir
+### zenoh_elixir
 
 Zenoh nodes implemented in Elixir :-
 

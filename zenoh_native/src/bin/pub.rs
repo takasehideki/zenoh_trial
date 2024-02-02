@@ -13,7 +13,7 @@ async fn main() {
     let handler = CtrlCHandler::new();
     while handler.should_continue() {
         let msg: String = format!("{}{}", msg_header, index.to_string());
-        println!("Publishing: {}", msg);
+        println!("[pub.rs] {}", msg);
 
         publisher.put(msg).res().await.unwrap();
 

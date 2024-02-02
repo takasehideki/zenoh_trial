@@ -7,7 +7,7 @@ if __name__ == "__main__":
     t = 0
     while True:
         msg = "Hello from Python!! " + f"{t}"
-        print(f"Publishing: {msg}")
+        print(f"[pub.py] {msg}")
         pub.put(msg)
         time.sleep(1)
         t = t + 1

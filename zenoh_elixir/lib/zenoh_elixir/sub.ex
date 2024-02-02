@@ -5,6 +5,6 @@ defmodule ZenohElixir.Sub do
   end
 
   def sub_callback(msg) do
-    IO.puts "Subscribed: " <> msg
+    IO.puts "[sub.ex] " <> msg
   end
 end

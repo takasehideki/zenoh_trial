@@ -12,9 +12,9 @@ futures = "0.3"
 ctrlc-handler = "0.1.2"
 
 [[bin]]
-name = "pub_rust"
+name = "pub"
 path = "src/bin/pub.rs"
 
 [[bin]]
-name = "sub_rust"
+name = "sub"
 path = "src/bin/sub.rs"
