@@ -9,10 +9,17 @@ docker build -t zenoh_trial .
 docker run -it --rm -v `pwd`:/zenoh_trial -w /zenoh_trial zenoh_trial
 ```
 
+## Tool versions (in Docker)
+
+- Ubuntu 22.04
+- Zenoh v0.10.1-rc
+- Rust 1.75.0
+- Python 3.10.12
+
 ## zenoh_native
 
 Zenoh nodes (natively) implemented in Rust.  
-Source code is referred to https://docs.rs/zenoh/0.10.1-rc/zenoh/#examples
+The Source code is referred to https://docs.rs/zenoh/0.10.1-rc/zenoh/#examples
 
 - Build
 ```
@@ -31,7 +38,7 @@ cargo build
 ## zenoh_python
 
 Zenoh nodes implemented in Python.  
-Source code is referred to https://zenoh.io/docs/getting-started/first-app/
+The Source code is referred to https://zenoh.io/docs/getting-started/first-app/
 
 - Run
 ```
