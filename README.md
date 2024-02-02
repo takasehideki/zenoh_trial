@@ -139,11 +139,30 @@ zenohd -e tcp/<host_ip>:7447
 
 ### MQTT
 
-The below is the standalone operation to confirm the Mosquitto MQTT.
+To confirm the marriage of Zenoh and MQTT, download the appropriate target `zenoh-bridge-mqtt` executable from [its Releases](https://github.com/eclipse-zenoh/zenoh-plugin-mqtt/releases/tag/0.10.1-rc) and locate it to `zenoh_mqtt/``.  
+Then, try the following operations!
+
+- 1st terminal (bridge):
+```
+docker run -it --rm -v `pwd`:/zenoh_trial -w /zenoh_trial --name zenoh_bridge takasehideki/zenoh_trial
+./zenoh_mqtt/zenoh-bridge-mqtt
+```
+- 2nd terminal (MQTT subscriber):
+```
+docker exec -it zenoh_bridge /bin/bash
+mosquitto_sub -d -t key/expression
+```
+- 3rd terminal (Zenoh publisher):
+```
+docker exec -it zenoh_bridge /bin/bash
+python3 zenoh_python/pub.py
+```
+
+[MEMO for ME] The below is the standalone operation to confirm the Mosquitto MQTT.
 
 - 1st terminal (broker):
 ```
-docker run -it --rm -v `pwd`:/zenoh_trial -w /zenoh_trial --name zenoh_mqtt zenoh_trial
+docker run -it --rm -v `pwd`:/zenoh_trial -w /zenoh_trial --name zenoh_mqtt takasehideki/zenoh_trial
 mosquitto -c zenoh_mqtt/mqtt_standalone.conf
 ```
 - 2nd terminal (subscriber):
