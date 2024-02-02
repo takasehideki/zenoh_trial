@@ -82,4 +82,10 @@ RUN set -xe \
 	&& find /usr/local/src/elixir/ -type f -not -regex "/usr/local/src/elixir/lib/[^\/]*/lib.*" -exec rm -rf {} + \
 	&& find /usr/local/src/elixir/ -type d -depth -empty -delete
 
+# Install Mosquitto MQTT
+RUN apt-get update && apt-get install -y \
+  mosquitto mosquitto-clients \
+  && apt-get clean \
+  && rm -rf /var/lib/apt/lists/*
+
 CMD ["/bin/bash"]
