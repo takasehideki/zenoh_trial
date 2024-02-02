@@ -1,6 +1,17 @@
 # zenoh_trial
 
-Quick trial a.k.a practice for the power of Zenoh :D
+Quick trial a.k.a practice to learn the power of Zenoh :D
+
+## Tool versions (installed in Docker)
+
+- Ubuntu 22.04 (base image)
+- Zenoh v0.10.1-rc
+- Rust 1.75.0
+- Python 3.10.12
+- Erlang/OTP 26.1.1
+- Elixir 1.15.7-otp-26
+- Mosquitto version 2.0.11
+- CycloneDDS 0.10.4
 
 ## Prepare Docker env
 
@@ -41,16 +52,6 @@ docker buildx create --name mybuilder
 docker buildx use mybuilder
 docker buildx build --platform linux/amd64,linux/arm64 -t takasehideki/zenoh_trial . --push
 ```
-
-## Tool versions (in Docker)
-
-- Ubuntu 22.04
-- Zenoh v0.10.1-rc
-- Rust 1.75.0
-- Python 3.10.12
-- Erlang/OTP 26.1.1
-- Elixir 1.15.7-otp-26
-- Mosquitto version 2.0.11
 
 ## Communication between anywhere in programming languages
 
@@ -159,7 +160,26 @@ docker exec -it zenoh_bridge /bin/bash
 python3 zenoh_python/pub.py
 ```
 
-[MEMO for ME] The below is the standalone operation to confirm the Mosquitto MQTT.
+### DDS
+
+Sure thing!
+Zenoh can also chat with DDS (along with MQTT).
+
+To confirm the marriage of Zenoh and DDS, download the appropriate target `zenoh-bridge-dds` executable from [its Releases](https://github.com/eclipse-zenoh/zenoh-plugin-dds/releases/tag/0.10.1-rc) and locate it to `zenoh_dds/``.  
+Then, try the following operations, following the previous section!
+
+- 4th terminal (bridge):
+```
+docker exec -it zenoh_bridge /bin/bash
+./zenoh_dds/zenoh-bridge-dds
+```
+- 5th terminal (DDS publisher):
+```
+docker exec -it zenoh_bridge /bin/bash
+python3 zenoh_dds/pub.py
+```
+
+### [MEMO for ME] standalone operation to confirm the Mosquitto MQTT.
 
 - 1st terminal (broker):
 ```
