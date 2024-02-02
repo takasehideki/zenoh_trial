@@ -88,4 +88,30 @@ RUN apt-get update && apt-get install -y \
   && apt-get clean \
   && rm -rf /var/lib/apt/lists/*
 
+# Install CycloneDDS
+RUN apt-get update && apt-get install -y \
+  cmake \
+  && apt-get clean \
+  && rm -rf /var/lib/apt/lists/*
+ENV CDDS_VERSION="0.10.4" \
+	LANG=C.UTF-8
+RUN set -xe \
+	&& CDDS_DOWNLOAD_URL="https://github.com/eclipse-cyclonedds/cyclonedds/archive/refs/tags/${CDDS_VERSION}.tar.gz" \
+	&& curl -fSL -o cyclonedds-src.tar.gz $CDDS_DOWNLOAD_URL \
+	&& mkdir -p /usr/local/src/cyclonedds \
+	&& tar -xzC /usr/local/src/cyclonedds --strip-components=1 -f cyclonedds-src.tar.gz \
+	&& rm cyclonedds-src.tar.gz \
+	&& cd /usr/local/src/cyclonedds \
+	&& mkdir -p build \
+	&& cd /usr/local/src/cyclonedds/build \
+  && cmake -DCMAKE_INSTALL_PREFIX=/usr/local/cyclonedds .. \
+  && cmake --build . --target install \
+	&& find /usr/local/src/cyclonedds/ -type f -not -regex "/usr/local/src/cyclonedds/lib/[^\/]*/lib.*" -exec rm -rf {} + \
+	&& find /usr/local/src/cyclonedds/ -type d -depth -empty -delete
+ENV CYCLONEDDS_HOME /usr/local/cyclonedds
+
+# Install CycloneDDS Python binding
+RUN pip install -U pip && \
+  pip install --no-cache-dir cyclonedds
+
 CMD ["/bin/bash"]

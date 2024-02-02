@@ -49,7 +49,8 @@ docker buildx build --platform linux/amd64,linux/arm64 -t takasehideki/zenoh_tri
 - Rust 1.75.0
 - Python 3.10.12
 - Erlang/OTP 26.1.1
-- Elixir 
+- Elixir 1.15.7-otp-26
+- Mosquitto version 2.0.11
 
 ## Communication between anywhere in programming languages
 
