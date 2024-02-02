@@ -84,3 +84,28 @@ iex()> ZenohElixir.Pub.main
 iex -S mix
 iex()> ZenohElixir.Sub.main
 ```
+
+## Communicate from inside and outside the Docker container
+
+Communicating with each other from inside and outside of containers is not easy in the default Docker environment.
+However, this can be established surprisingly quickly with the power of the Zenoh router:D
+
+To run this demo, the host must also have Zenoh (zenohd) installed ([how to install it](https://github.com/eclipse-zenoh/zenoh?tab=readme-ov-file#how-to-install-it)).
+Also, please confirm the IPv4 address (`<host_ip>`) of the host, e.g., `ifconfig en0`.
+
+- 1st terminal on the **host**:
+```
+python3 zenoh_python/pub.py
+```
+- 2nd terminal on the _container_:
+```
+python3 zenoh_python/sub.py
+```
+- 3rd terminal on the **host**:
+```
+zenohd
+```
+- 4th terminal on the _container_:
+```
+zenohd -e tcp/<host_ip>:7447
+```
