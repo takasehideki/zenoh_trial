@@ -59,3 +59,24 @@ python3 pub.py
 cd zenoh_python
 python3 sub.py
 ```
+
+## zenoh_elixir
+
+Zenoh nodes implemented in Elixir :-
+
+- Build
+```
+cd zenoh_elixir
+mix deps.get
+mix compile
+```
+
+- Run
+```
+iex -S mix
+iex()> ZenohElixir.Pub.main
+```
+```
+iex -S mix
+iex()> ZenohElixir.Sub.main
+```
