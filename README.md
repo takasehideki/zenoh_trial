@@ -134,3 +134,25 @@ zenohd
 ```
 zenohd -e tcp/<host_ip>:7447
 ```
+
+## Communicate with another stack!
+
+### MQTT
+
+The below is the standalone operation to confirm the Mosquitto MQTT.
+
+- 1st terminal (broker):
+```
+docker run -it --rm -v `pwd`:/zenoh_trial -w /zenoh_trial --name zenoh_mqtt zenoh_trial
+mosquitto -c zenoh_mqtt/mqtt_standalone.conf
+```
+- 2nd terminal (subscriber):
+```
+docker exec -it zenoh_mqtt /bin/bash
+mosquitto_sub -d -t key/expression
+```
+- 3rd terminal (publisher):
+```
+docker exec -it zenoh_mqtt /bin/bash
+mosquitto_pub -d -t key/expression -m "Hello from MQTT!!"
+```
