@@ -23,6 +23,8 @@ docker run -it --rm -v `pwd`:/zenoh_trial -w /zenoh_trial zenoh_trial
 - Zenoh v0.10.1-rc
 - Rust 1.75.0
 - Python 3.10.12
+- Erlang/OTP 26.1.1
+- Elixir 
 
 ## zenoh_native
 
