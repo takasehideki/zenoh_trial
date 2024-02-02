@@ -3,6 +3,14 @@ Quick trial a.k.a practice for the power of Zenoh :D
 
 ## Prepare Docker env
 
+### Usage by Docker Hub image
+
+```
+docker run -it --rm -v `pwd`:/zenoh_trial -w /zenoh_trial takasehideki/zenoh_trial
+```
+
+### Build image locally
+
 ```
 cd <git_cloned_dir>
 docker build -t zenoh_trial .
