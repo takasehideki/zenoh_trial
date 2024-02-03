@@ -1,5 +1,7 @@
 FROM ubuntu:22.04
 
+ARG TARGETPLATFORM
+
 # Install Zenoh
 RUN apt-get update && apt-get install -y \
   ca-certificates \
@@ -35,8 +37,10 @@ RUN apt-get update && apt-get install -y \
   && apt-get clean \
   && rm -rf /var/lib/apt/lists/*
 
+# Erlang for linux/arm64 from source
 ENV OTP_VERSION="26.1.1"
-RUN set -xe \
+RUN if [ ${TARGETPLATFORM} = "linux/arm64" ]; then \
+	( set -xe \
 	&& OTP_DOWNLOAD_URL="https://github.com/erlang/otp/archive/OTP-${OTP_VERSION}.tar.gz" \
 	&& OTP_DOWNLOAD_SHA256="a47203930e4b34a0e23bdf0a968127e5ec9d0e6c69ccf2e53be81cd2360eee2d" \
 	&& runtimeDeps='libodbc1 \
@@ -64,12 +68,27 @@ RUN set -xe \
 	  && make install install-docs DOC_TARGETS=chunks ) \
 	&& find /usr/local -name examples | xargs rm -rf \
 	&& apt-get purge -y --auto-remove $buildDeps \
-	&& rm -rf $ERL_TOP /var/lib/apt/lists/*
+	&& rm -rf $ERL_TOP /var/lib/apt/lists/* \
+	) ; \
+	fi;
+# Erlang for linux/amd64 from deb
+RUN if [ ${TARGETPLATFORM} = "linux/amd64" ]; then \
+	( apt-get update && apt-get install -y \
+	libncurses5 libsctp1 \ 
+	&& apt-get clean \
+	&& rm -rf /var/lib/apt/lists/* \
+	&& curl -fSL -o esl-erlang.deb "https://binaries2.erlang-solutions.com/ubuntu/pool/contrib/e/esl-erlang/esl-erlang_26.1.1-1~ubuntu~jammy_amd64.deb" \
+	&& dpkg -i esl-erlang.deb \
+	&& rm -rf esl-erlang.deb \
+	) ; \
+	fi;
 
 # Install Elixir
 ENV ELIXIR_VERSION="v1.15.7" \
 	LANG=C.UTF-8
-RUN set -xe \
+# Elixir for linux/arm64 from source
+RUN if [ ${TARGETPLATFORM} = "linux/arm64" ]; then \
+	( set -xe \
 	&& ELIXIR_DOWNLOAD_URL="https://github.com/elixir-lang/elixir/archive/${ELIXIR_VERSION}.tar.gz" \
 	&& ELIXIR_DOWNLOAD_SHA256="78bde2786b395515ae1eaa7d26faa7edfdd6632bfcfcd75bccb6341a18e8798f" \
 	&& curl -fSL -o elixir-src.tar.gz $ELIXIR_DOWNLOAD_URL \
@@ -80,7 +99,16 @@ RUN set -xe \
 	&& cd /usr/local/src/elixir \
 	&& make install clean \
 	&& find /usr/local/src/elixir/ -type f -not -regex "/usr/local/src/elixir/lib/[^\/]*/lib.*" -exec rm -rf {} + \
-	&& find /usr/local/src/elixir/ -type d -depth -empty -delete
+	&& find /usr/local/src/elixir/ -type d -depth -empty -delete \
+	) ; \
+	fi;
+# Elixir for linux/amd64 from deb
+RUN if [ ${TARGETPLATFORM} = "linux/amd64" ]; then \
+	( curl -fSL -o elixir.deb "https://binaries2.erlang-solutions.com/ubuntu/pool/contrib/e/elixir/elixir_1.15.7_1_otp_26.1.2~ubuntu~jammy_all.deb" \
+	&& dpkg -i elixir.deb \
+	&& rm -rf elixir.deb \
+	) ; \
+	fi;
 
 # Install Mosquitto MQTT
 RUN apt-get update && apt-get install -y \

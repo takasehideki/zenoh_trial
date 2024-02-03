@@ -15,9 +15,22 @@ Quick trial a.k.a practice to learn the power of Zenoh :D
 
 ## Prepare Docker env
 
+### Quickstart by Docker Hub image [recommended?]
+
+Pre-built Docker image has been published on [Docker Hub](https://hub.docker.com/repository/docker/takasehideki/zenoh_trial/general)
+
+```
+cd <git_cloned_dir>
+docker run -it --rm -v `pwd`:/zenoh_trial -w /zenoh_trial takasehideki/zenoh_trial
+```
+
+Currently, the operation in the pre-built Docker image is confirmed only on my M1 Mac (arm64) machine.
+IOW, you are lucky if you also have it.
+Please let me know if anyone has managed to get it to work on an x64 (amd64) machine.
+
 ### Build the image and use it locally
 
-If you want to try this repo on the x64 machine, please enjoy the coffee break because building the image may take too long time :-
+Please enjoy the coffee break because building the image may take too long time :-
 
 ```
 cd <git_cloned_dir>
@@ -25,27 +38,10 @@ docker build -t zenoh_trial .
 docker run -it --rm -v `pwd`:/zenoh_trial -w /zenoh_trial zenoh_trial
 ```
 
-### Quickstart by Docker Hub image
-
-Currently, the operation in the pre-built Docker image is confirmed only on my M1 Mac (arm64) machine,,,
-IOW, you are lucky if you also have it.
-
-```
-cd <git_cloned_dir>
-docker run -it --rm -v `pwd`:/zenoh_trial -w /zenoh_trial takasehideki/zenoh_trial
-```
-
 #### MEMO for ME: build and push the image to Docker Hub
 
-Since the Elixir build failed for amd64 on M1Mac, I am required to operate the below on the x64/Ubuntu machine,,,
-
-```
-docker build -t takasehideki/zenoh_trial . --push
-```
-
-#### WiP!: build and push the multi-platform images to Docker Hub
-
-Unfortunately, I could not finish the below operation yet since the Elixir build failed for another target (for amd64 on M1Mac, or arm64 on x64/Ubuntu machine).
+The following operation has been confirmed on my M1Mac.
+Note that the source build for Elixir failed for another target (for amd64 on M1Mac, or arm64 on x64/Ubuntu machine).
 
 ```
 docker buildx create --name mybuilder
