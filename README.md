@@ -122,7 +122,10 @@ python3 zenoh_python/pub.py
 ```
 - 2nd terminal on the _container_:
 ```
-python3 zenoh_python/sub.py
+docker run -it --rm -v `pwd`:/zenoh_trial -w /zenoh_trial takasehideki/zenoh_trial
+cd zenoh_elixir
+iex -S mix
+iex()> ZenohElixir.Sub.main
 ```
 - 3rd terminal on the **host**:
 ```
@@ -130,6 +133,7 @@ zenohd
 ```
 - 4th terminal on the _container_:
 ```
+docker run -it --rm -v `pwd`:/zenoh_trial -w /zenoh_trial takasehideki/zenoh_trial
 zenohd -e tcp/<host_ip>:7447
 ```
 
@@ -137,7 +141,8 @@ zenohd -e tcp/<host_ip>:7447
 
 ### MQTT
 
-To confirm the marriage of Zenoh and MQTT, download the appropriate target `zenoh-bridge-mqtt` executable from [its Releases](https://github.com/eclipse-zenoh/zenoh-plugin-mqtt/releases/tag/0.10.1-rc) and locate it to `zenoh_mqtt/``.  
+To confirm the marriage of Zenoh and MQTT, download the appropriate target `zenoh-bridge-mqtt` executable from [its Releases](https://github.com/eclipse-zenoh/zenoh-plugin-mqtt/releases/tag/0.10.1-rc) and locate it to `zenoh_mqtt/``.
+
 Then, try the following operations!
 
 - 1st terminal (bridge):
@@ -153,7 +158,9 @@ mosquitto_sub -d -t key/expression
 - 3rd terminal (Zenoh publisher):
 ```
 docker exec -it zenoh_bridge /bin/bash
-python3 zenoh_python/pub.py
+cd zenoh_elixir
+iex -S mix
+iex()> ZenohElixir.Pub.main
 ```
 
 ### DDS
@@ -161,15 +168,22 @@ python3 zenoh_python/pub.py
 Sure thing!
 Zenoh can also chat with DDS (along with MQTT).
 
-To confirm the marriage of Zenoh and DDS, download the appropriate target `zenoh-bridge-dds` executable from [its Releases](https://github.com/eclipse-zenoh/zenoh-plugin-dds/releases/tag/0.10.1-rc) and locate it to `zenoh_dds/``.  
-Then, try the following operations, following the previous section!
+To confirm the marriage of Zenoh and DDS, download the appropriate target `zenoh-bridge-dds` executable from [its Releases](https://github.com/eclipse-zenoh/zenoh-plugin-dds/releases/tag/0.10.1-rc) and locate it to `zenoh_dds/``.
+
+Then, try the following operations!
+It would be more awesome to operate with the previous section!!
 
 - 4th terminal (bridge):
 ```
 docker exec -it zenoh_bridge /bin/bash
 ./zenoh_dds/zenoh-bridge-dds
 ```
-- 5th terminal (DDS publisher):
+- 5th terminal (Zenoh subscriber):
+```
+docker exec -it zenoh_bridge /bin/bash
+python3 zenoh_python/sub.py
+```
+- 6th terminal (DDS publisher):
 ```
 docker exec -it zenoh_bridge /bin/bash
 python3 zenoh_dds/pub.py
