@@ -2,6 +2,8 @@
 
 Quick trial a.k.a practice to learn the power of Zenoh :D
 
+The demonstration of this repository has been presented at FA_Study ([connpass](https://fa-study.connpass.com/event/301303/) | [SpeakerDeck](https://speakerdeck.com/takasehideki/nansikairoirotunagaruzenohnoshao-jie))
+
 ## Tool versions (installed in Docker)
 
 - Ubuntu 22.04 (base image)
@@ -24,9 +26,9 @@ cd <git_cloned_dir>
 docker run -it --rm -v `pwd`:/zenoh_trial -w /zenoh_trial takasehideki/zenoh_trial
 ```
 
-Currently, the operation in the pre-built Docker image is confirmed only on my M1 Mac (arm64) machine.
-IOW, you are lucky if you also have it.
-Please let me know if anyone has managed to get it to work on an x64 (amd64) machine.
+Currently, the operation in the pre-built Docker image is mainly confirmed on my M1 Mac (arm64) machine.
+However, we heard reports of it working on x64 (amd64) machines as well.
+If you have any problems (especially on x64 (amd64) machines), please feel free to let me know via [Issues](https://github.com/takasehideki/zenoh_trial/issues).
 
 ### Build the image and use it locally
 
@@ -41,7 +43,7 @@ docker run -it --rm -v `pwd`:/zenoh_trial -w /zenoh_trial zenoh_trial
 #### MEMO for ME: build and push the image to Docker Hub
 
 The following operation has been confirmed on my M1Mac.
-Note that the source build for Elixir failed for another target (for amd64 on M1Mac, or arm64 on x64/Ubuntu machine).
+Note that the source build of Elixir failed for another target (for amd64 on M1Mac, or arm64 on x64/Ubuntu machine).
 
 ```
 docker buildx create --name mybuilder

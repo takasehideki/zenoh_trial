@@ -100,6 +100,7 @@ RUN if [ ${TARGETPLATFORM} = "linux/arm64" ]; then \
 	&& make install clean \
 	&& find /usr/local/src/elixir/ -type f -not -regex "/usr/local/src/elixir/lib/[^\/]*/lib.*" -exec rm -rf {} + \
 	&& find /usr/local/src/elixir/ -type d -depth -empty -delete \
+	&& mix local.hex --force \
 	) ; \
 	fi;
 # Elixir for linux/amd64 from deb
@@ -107,6 +108,7 @@ RUN if [ ${TARGETPLATFORM} = "linux/amd64" ]; then \
 	( curl -fSL -o elixir.deb "https://binaries2.erlang-solutions.com/ubuntu/pool/contrib/e/elixir/elixir_1.15.7_1_otp_26.1.2~ubuntu~jammy_all.deb" \
 	&& dpkg -i elixir.deb \
 	&& rm -rf elixir.deb \
+	&& mix local.hex --force \
 	) ; \
 	fi;
 
