@@ -118,6 +118,15 @@ RUN apt-get update && apt-get install -y \
   && apt-get clean \
   && rm -rf /var/lib/apt/lists/*
 
+# Download and locate zenoh-bridge-mqtt
+RUN if [ ${TARGETPLATFORM} = "linux/arm64" ]; then \
+	curl -fSL -o /tmp/zenoh-bridge-mqtt.zip "https://github.com/eclipse-zenoh/zenoh-plugin-mqtt/releases/download/0.10.1-rc/zenoh-bridge-mqtt-0.10.1-rc-aarch64-unknown-linux-gnu.zip" ; \
+	elif [ ${TARGETPLATFORM} = "linux/amd64" ]; then \
+	curl -fSL -o /tmp/zenoh-bridge-mqtt.zip "https://github.com/eclipse-zenoh/zenoh-plugin-mqtt/releases/download/0.10.1-rc/zenoh-bridge-mqtt-0.10.1-rc-x86_64-unknown-linux-gnu.zip" ; \
+	fi \
+	&& unzip /tmp/zenoh-bridge-mqtt.zip -d /usr/local/bin \
+	&& rm -rf /tmp/zenoh-bridge-mqtt.zip
+
 # Install CycloneDDS
 RUN apt-get update && apt-get install -y \
   cmake \
@@ -143,5 +152,14 @@ ENV CYCLONEDDS_HOME /usr/local/cyclonedds
 # Install CycloneDDS Python binding
 RUN pip install -U pip && \
   pip install --no-cache-dir cyclonedds
+
+# Download and locate zenoh-bridge-dds
+RUN if [ ${TARGETPLATFORM} = "linux/arm64" ]; then \
+	curl -fSL -o /tmp/zenoh-bridge-dds.zip "https://github.com/eclipse-zenoh/zenoh-plugin-dds/releases/download/0.10.1-rc/zenoh-bridge-dds-0.10.1-rc-aarch64-unknown-linux-gnu.zip" ; \
+	elif [ ${TARGETPLATFORM} = "linux/amd64" ]; then \
+	curl -fSL -o /tmp/zenoh-bridge-dds.zip "https://github.com/eclipse-zenoh/zenoh-plugin-dds/releases/download/0.10.1-rc/zenoh-bridge-dds-0.10.1-rc-x86_64-unknown-linux-gnu.zip" ; \
+	fi \
+	&& unzip /tmp/zenoh-bridge-dds.zip -d /usr/local/bin \
+	&& rm -rf /tmp/zenoh-bridge-dds.zip
 
 CMD ["/bin/bash"]

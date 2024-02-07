@@ -143,14 +143,12 @@ zenohd -e tcp/<host_ip>:7447
 
 ### MQTT
 
-To confirm the marriage of Zenoh and MQTT, download the appropriate target `zenoh-bridge-mqtt` executable from [its Releases](https://github.com/eclipse-zenoh/zenoh-plugin-mqtt/releases/tag/0.10.1-rc) and locate it to `zenoh_mqtt/``.
-
-Then, try the following operations!
+To confirm the marriage of Zenoh and MQTT, try the following operations!
 
 - 1st terminal (bridge):
 ```
 docker run -it --rm -v `pwd`:/zenoh_trial -w /zenoh_trial --name zenoh_bridge takasehideki/zenoh_trial
-./zenoh_mqtt/zenoh-bridge-mqtt
+zenoh-bridge-mqtt
 ```
 - 2nd terminal (MQTT subscriber):
 ```
@@ -170,15 +168,13 @@ iex()> ZenohElixir.Pub.main
 Sure thing!
 Zenoh can also chat with DDS (along with MQTT).
 
-To confirm the marriage of Zenoh and DDS, download the appropriate target `zenoh-bridge-dds` executable from [its Releases](https://github.com/eclipse-zenoh/zenoh-plugin-dds/releases/tag/0.10.1-rc) and locate it to `zenoh_dds/``.
-
-Then, try the following operations!
+To confirm the marriage of Zenoh and DDS, try the following operations!
 It would be more awesome to operate with the previous section!!
 
 - 4th terminal (bridge):
 ```
 docker exec -it zenoh_bridge /bin/bash
-./zenoh_dds/zenoh-bridge-dds
+zenoh-bridge-dds
 ```
 - 5th terminal (Zenoh subscriber):
 ```
