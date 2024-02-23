@@ -1,7 +1,7 @@
 defmodule ZenohElixir.Pub do
   def main do
-    session = Zenohex.open()
-    {:ok, publisher} = Session.declare_publisher(session, "key/expression")
+    {:ok, session} = Zenohex.open()
+    {:ok, publisher} = Zenohex.Session.declare_publisher(session, "key/expression")
 
     spawn(ZenohElixir.Pub, :publish, [publisher, 0])
   end
@@ -10,7 +10,7 @@ defmodule ZenohElixir.Pub do
     msg = "Hello from Elixir!! " <> to_string(num)
     IO.puts "[pub.ex] " <> msg
 
-    Publisher.put(publisher, msg)
+    Zenohex.Publisher.put(publisher, msg)
 
     Process.sleep(1000)
     publish(publisher, num + 1)
